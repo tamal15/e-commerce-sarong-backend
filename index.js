@@ -30,6 +30,7 @@ async function run() {
         const userCollection = database.collection('users');
         const likeCollection = database.collection('like');
         const paymentCollection = database.collection('payment');
+        const adminPaymentCollection = database.collection('Adminpaymentdata');
         const featuresCollection = database.collection('features');
         const fashionCollection = database.collection('fashion');
         const adminUploadProductCollection = database.collection('adminProducts');
@@ -598,9 +599,11 @@ async function run() {
 app.post('/init', async(req, res) => {
     // console.log(req.body)
     const email=req.body.cartProducts.map((data)=>data.buyerEmail)
+    const adminemail=req.body.cartProducts.map((data)=>data.adminEmail)
     console.log(email)
     const data = {
         emails:email,
+        admindata:adminemail,
         total_amount: req.body.total_amount,
         currency: req.body.currency,
         tran_id: uuidv4(),
@@ -693,6 +696,17 @@ app.post ('/fail', async(req,res)=>{
     res.json(order)
   });
 
+
+
+
+
+
+
+
+
+
+
+
 //   client order and single mail 
 // email get my Order==============================================
  // get myorder 
@@ -713,6 +727,19 @@ app.post ('/fail', async(req,res)=>{
     console.log(email)
     const result = await paymentCollection
       .find({ emails: email })
+      .toArray();
+    res.send(result);
+  });
+
+  // get admin page myorder 
+  app.get("/userMy/:email", async (req, res) => {
+    // const buyeremail=req.body.emails.map((data)=>data.buyerEmail)
+    // console.log(emails)
+    // console.log(req.params.email);
+    const email = req.params.email;
+    console.log(email)
+    const result = await paymentCollection
+      .find({ admindata: email })
       .toArray();
     res.send(result);
   });
