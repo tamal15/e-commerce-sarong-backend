@@ -773,6 +773,12 @@ app.delete("/manageAllOrderDelete/:id", async (req, res) => {
 //     const result=await featuresCollection.insertOne(user);
 //     res.json(result)
 // });
+app.post('/datacollect',async(req,res)=>{
+    const value=req.body;
+    console.log(value)
+    const output=await featuresCollection.insertOne(value);
+    res.json(output)
+});
 
 app.post('/features',async(req,res)=>{
     const value=req.body;
