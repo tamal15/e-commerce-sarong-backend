@@ -1,5 +1,4 @@
-// e-commerce-site
-// jxjFr9MI4pLrJS0s
+
 const express= require("express")
 const { MongoClient, ServerApiVersion } = require('mongodb');
 // const SSLCommerzPayment = require('sslcommerz')
