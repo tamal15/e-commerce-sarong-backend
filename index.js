@@ -679,7 +679,7 @@ app.post('/success',async(req,res)=>{
         }
     
       })
-    res.status(200).redirect(`http://localhost:3000/success/${req.body.tran_id}`)
+    res.status(200).redirect(`https://sarong-42db5.web.app/success/${req.body.tran_id}`)
     // res.status(200).json(req.body)
 })
 
