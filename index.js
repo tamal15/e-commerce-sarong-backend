@@ -346,6 +346,20 @@ async function run() {
     // })
 
 
+    // update schedule data 
+      // database admin role 
+      app.put('/schedule/:id', async(req,res)=>{
+        const users=req.body.date;
+        console.log('put',users)
+        const id=(req.params.id)
+        console.log(id)
+        // const filter={_id:ObjectId(req.params.id)}
+        // const updateDoc={$set:{schedule:users}}
+        // const result=await buyerCollection.updateOne(filter,updateDoc)
+        // res.json(result)
+    });
+
+
     // get sharee 
     app.get("/sharee", async (req, res) => {
         const page = req.query.page;
@@ -428,6 +442,19 @@ async function run() {
     app.delete('/deleteadmin/:id',async(req,res)=>{
         const result= await adminUploadProductCollection.deleteOne({_id:ObjectId(req.params.id)});
         res.json(result)
+    });
+
+
+    app.put("/BlogStatusUpdate/:id", async (req, res) => {
+     console.log(req.body.date)
+        const filter = { _id: ObjectId(req.params.id) };
+
+        const result = await buyerCollection.updateOne(filter, {
+            $set: {
+                schedule: req.body.date,
+            },
+        });
+        res.send(result);
     });
 
 
@@ -605,17 +632,19 @@ async function run() {
 app.post('/init', async(req, res) => {
     // console.log(req.body)
     const email=req.body.cartProducts.map((data)=>data.buyerEmail)
+    const schedule=req.body.cartProducts.map((data)=>data.schedule)
     const adminemail=req.body.cartProducts.map((data)=>data.adminEmail)
     console.log(email)
+    console.log(schedule)
     const data = {
         emails:email,
         admindata:adminemail,
         total_amount: req.body.total_amount,
         currency: req.body.currency,
         tran_id: uuidv4(),
-        success_url: 'https://aqueous-headland-92449.herokuapp.com/success',
-        fail_url: 'https://aqueous-headland-92449.herokuapp.com/fail',
-        cancel_url: 'https://aqueous-headland-92449.herokuapp.com/cancel',
+        success_url: 'https://boiling-coast-70144.herokuapp.com/success',
+        fail_url: 'https://boiling-coast-70144.herokuapp.com/fail',
+        cancel_url: 'https://boiling-coast-70144.herokuapp.com/cancel',
         ipn_url: 'http://yoursite.com/ipn',
         shipping_method: 'Courier',
         product_name: "req.body.product_name",
@@ -633,6 +662,8 @@ app.post('/init', async(req, res) => {
         cus_add1: req.body.cus_add1,
         cus_add2: 'Dhaka',
         cus_city: req.body.cus_city,
+        schedules: req.body.schedules,
+        purchase: req.body.purchase,
         cus_state:  req.body.cus_state,
         cus_postcode: req.body.cus_postcode,
         cus_country: req.body.cus_country,
@@ -653,7 +684,7 @@ app.post('/init', async(req, res) => {
     };
     // insert order data into database 
     const order=await paymentCollection.insertOne(data)
-    // console.log(data)
+    console.log(data)
     const sslcommer = new SSLCommerzPayment(process.env.STORE_ID,process.env.STORE_PASSWORD,false) //true for live default false for sandbox
     sslcommer.init(data).then(data => {
         //process the response that got from sslcommerz 
@@ -686,12 +717,12 @@ app.post('/success',async(req,res)=>{
 app.post ('/fail', async(req,res)=>{
     // console.log(req.body);
   const order=await paymentCollection.deleteOne({tran_id:req.body.tran_id})
-    res.status(400).redirect('http://localhost:3000')
+    res.status(400).redirect('https://sarong-42db5.web.app')
   })
   app.post ('/cancel', async(req,res)=>{
     // console.log(req.body);
     const order=await paymentCollection.deleteOne({tran_id:req.body.tran_id})
-    res.status(200).redirect('http://localhost:3000')
+    res.status(200).redirect('https://sarong-42db5.web.app')
   })
 
 
