@@ -274,6 +274,13 @@ async function run() {
             const result=await adminUploadProductCollection.findOne(query)
             res.json(result)
         });
+        // details show admin product 
+        app.get('/potterdetails/:id', async(req,res)=>{
+            const id=req.params.id
+            const query={_id:ObjectId(id)}
+            const result=await potterCollection.findOne(query)
+            res.json(result)
+        });
 
 
           // add database user collection 
