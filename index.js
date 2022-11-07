@@ -393,13 +393,7 @@ async function run() {
         const result = await userReviewCollection.insertOne(review);
         res.json(result);
     });
-    // app.get('/review/:id', async(req,res)=>{
-    //     const id=req.params.id;
-    //     console.log(id)
-    //     const query={_id:ObjectId(id)};
-    //     const result=await userReviewCollection.findOne(query)
-    //     res.json(result)
-    // })
+   
 
 
         // get resview 
@@ -416,10 +410,7 @@ async function run() {
         console.log('put',users)
         const id=(req.params.id)
         console.log(id)
-        // const filter={_id:ObjectId(req.params.id)}
-        // const updateDoc={$set:{schedule:users}}
-        // const result=await buyerCollection.updateOne(filter,updateDoc)
-        // res.json(result)
+       
     });
 
 
@@ -540,15 +531,7 @@ async function run() {
     //   })
 
 
-    // customer payment store datbase 
-    // app.post('/init', async(req,res)=>{
-    //     const user=req.body;
-    //     console.log(user)
-    //     const result=await paymentCollection.insertOne(user);
-    //     // console.log(body)
-    //     res.json(result);
-       
-    // })
+   
 
 
      // ================================Like in post====================================================
